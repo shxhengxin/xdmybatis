@@ -9,6 +9,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,15 +30,39 @@ public class SqlSessionDemo {
         //获取Session
         try(SqlSession sqlSession = sqlSessionFactory.openSession()){
             VideoMapper videoMapper = sqlSession.getMapper(VideoMapper.class);
-            Video video = videoMapper.selectById(44);
+            //Video video = videoMapper.selectById(44);
             //System.out.println(video.toString());
 
            // List<Video> videoList = videoMapper.selectList();
             //System.out.println(videoList.toString());
 
             //多参数查询
-            List<Video> videoList = videoMapper.selectByPointAndTitleLike(8.7, "HTML");
-            System.out.println(videoList.toString());
+            //List<Video> videoList = videoMapper.selectByPointAndTitleLike(8.7, "HTML");
+            //System.out.println(videoList.toString());
+
+            //新增一条记录
+            Video video1 = new Video();
+            video1.setTitle("小滴课堂面试专题300道");
+            video1.setCoverImg("xdclass.net/aaa.png");
+            video1.setPoint(9.4);
+            video1.setCreateTime(new Date());
+            video1.setPrice(9900);
+            video1.setSummary("面试专题概要");
+            //final int rows = videoMapper.add(video1);
+            //System.out.println(rows);
+            Video video2 = new Video();
+            video2.setTitle("小滴课堂面试专题200道");
+            video2.setCoverImg("xdclass.net/aaa.png");
+            video2.setPoint(9.2);
+            video2.setCreateTime(new Date());
+            video2.setPrice(9200);
+            video2.setSummary("面试专题概要");
+            List<Video> list = new ArrayList<>();
+            //list.add(video1);
+            //list.add(video2);
+            list.addAll(Arrays.asList(video1,video2));
+            final int rows = videoMapper.addBatch(list);
+            System.out.println(rows);
         }
     }
 }

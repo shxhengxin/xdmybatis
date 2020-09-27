@@ -28,4 +28,18 @@ public interface VideoMapper {
      * @return net.xdclass.online_class.domain.Video
      */
     List<Video> selectByPointAndTitleLike(@Param("point")double point,@Param("title")String title);
+
+    /**
+     * 新增一条视频记录
+     * @param video
+     * @return
+     */
+    int add(Video video);
+
+    /**
+     * 批量插入
+     * @param list
+     * @return
+     */
+    int addBatch(List<Video> list);
 }
