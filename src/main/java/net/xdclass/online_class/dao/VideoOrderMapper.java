@@ -1,5 +1,6 @@
 package net.xdclass.online_class.dao;
 
+import net.xdclass.online_class.domain.User;
 import net.xdclass.online_class.domain.VideoOrder;
 
 import java.util.List;
@@ -10,4 +11,13 @@ public interface VideoOrderMapper {
      * @return
      */
     List<VideoOrder> queryVideoOrderList();
+
+    /**
+     * 查询全部用户的全部订单
+     * @return
+     */
+    List<User> queryUserOrder();
+
+    //懒加载
+    List<VideoOrder> queryVideoOrderListLazy();
 }

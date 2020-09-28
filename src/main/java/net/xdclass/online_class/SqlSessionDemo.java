@@ -2,6 +2,7 @@ package net.xdclass.online_class;
 
 import net.xdclass.online_class.dao.VideoMapper;
 import net.xdclass.online_class.dao.VideoOrderMapper;
+import net.xdclass.online_class.domain.User;
 import net.xdclass.online_class.domain.Video;
 import net.xdclass.online_class.domain.VideoOrder;
 import org.apache.ibatis.io.Resources;
@@ -82,8 +83,15 @@ public class SqlSessionDemo {
             System.out.println(rows);*/
 
             final VideoOrderMapper videoOrderMapper = sqlSession.getMapper(VideoOrderMapper.class);
-            final List<VideoOrder> videoOrderList = videoOrderMapper.queryVideoOrderList();
-            System.out.println(videoOrderList.toString());
+            final List<VideoOrder> videoOrderListLazy = videoOrderMapper.queryVideoOrderListLazy();
+
+            for (VideoOrder videoOrder: videoOrderListLazy
+                 ) {
+                System.out.println(videoOrder.getVideoTitle());
+            }
+
+            //final List<User> userList = videoOrderMapper.queryUserOrder();
+            //System.out.println(userList.toString());
         }
     }
 }

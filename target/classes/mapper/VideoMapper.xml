@@ -7,6 +7,21 @@ namespace:名称空间，一般需要保持全局唯一  最好和dao层的java�
 可以映射 sql语句 到对应的方法名称和参数、返回类型
 -->
 <mapper namespace="net.xdclass.online_class.dao.VideoMapper">
+    <!--开启mapper的namespace下的二级缓存-->
+    <!--
+        eviction:代表的是缓存回收策略，常见下面两种。
+        (1) LRU,最近最少使用的，一处最长时间不用的对象
+        (2) FIFO,先进先出，按对象进入缓存的顺序来移除他们
+
+        flushInterval:刷新间隔时间，单位为毫秒，这里配置的是100秒刷新，如果不配置它，当SQL被执行的时候才会去刷新缓存。
+
+        size:引用数目，代表缓存最多可以存储多少个对象，设置过大会导致内存溢出
+
+        readOnly:只读，缓存数据只能读取而不能修改，默认值是false
+    -->
+    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>
+
+
     <sql id="base_video_field">
         id,title,summary,cover_img
     </sql>
@@ -14,9 +29,10 @@ namespace:名称空间，一般需要保持全局唯一  最好和dao层的java�
     statement sql
     id:当前mapper下需要唯一
     resultType： sql查询结果集的封装
+    useCache 是否走缓存
     -->
     <!--<select id="selectById" resultType="net.xdclass.online_class.domain.Video">-->
-    <select id="selectById" resultType="Video">
+    <select id="selectById" resultType="Video" useCache="false">
         select <include refid="base_video_field" /> from video where id = #{video_id}
     </select>
     

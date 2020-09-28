@@ -1,5 +1,6 @@
 package net.xdclass.online_class.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @Author : shenhengxin  //作者
  * @Date: 2020-09-25 21:00  //时间
  */
-public class Video {
+public class Video implements Serializable {
     private int id;
     private String title;
     private String summary;
