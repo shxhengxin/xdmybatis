@@ -1,7 +1,9 @@
 package net.xdclass.online_class;
 
 import net.xdclass.online_class.dao.VideoMapper;
+import net.xdclass.online_class.dao.VideoOrderMapper;
 import net.xdclass.online_class.domain.Video;
+import net.xdclass.online_class.domain.VideoOrder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -26,9 +28,9 @@ public class SqlSessionDemo {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         //获取Session
         try(SqlSession sqlSession = sqlSessionFactory.openSession()){
-            VideoMapper videoMapper = sqlSession.getMapper(VideoMapper.class);
-            Video video = videoMapper.selectBaseFieldByWithResultMap(44);
-            System.out.println(video.toString());
+            //VideoMapper videoMapper = sqlSession.getMapper(VideoMapper.class);
+            //Video video = videoMapper.selectBaseFieldByWithResultMap(44);
+            //System.out.println(video.toString());
 
            // List<Video> videoList = videoMapper.selectList();
             //System.out.println(videoList.toString());
@@ -78,6 +80,10 @@ public class SqlSessionDemo {
 
             final int rows = videoMapper.deleteByCreateTimeAndPrice(map);
             System.out.println(rows);*/
+
+            final VideoOrderMapper videoOrderMapper = sqlSession.getMapper(VideoOrderMapper.class);
+            final List<VideoOrder> videoOrderList = videoOrderMapper.queryVideoOrderList();
+            System.out.println(videoOrderList.toString());
         }
     }
 }
