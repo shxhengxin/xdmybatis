@@ -28,13 +28,13 @@ public class SqlSessionCacheDemo {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         //获取Session
         try {
-            SqlSession sqlSession1 = sqlSessionFactory.openSession();
+            SqlSession sqlSession1 = sqlSessionFactory.openSession(true);
             final VideoMapper videoMapper1 = sqlSession1.getMapper(VideoMapper.class);
             final Video video1 = videoMapper1.selectById(44);
             System.out.println(video1);
             sqlSession1.commit();
 
-            SqlSession sqlSession2 = sqlSessionFactory.openSession();
+            SqlSession sqlSession2 = sqlSessionFactory.openSession(true);
             final VideoMapper videoMapper2 = sqlSession2.getMapper(VideoMapper.class);
             final Video video2 = videoMapper2.selectById(44);
             System.out.println(video2);

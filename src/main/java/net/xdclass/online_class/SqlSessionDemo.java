@@ -28,7 +28,7 @@ public class SqlSessionDemo {
         //构建Session工厂
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         //获取Session
-        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession(true)){
             //VideoMapper videoMapper = sqlSession.getMapper(VideoMapper.class);
             //Video video = videoMapper.selectBaseFieldByWithResultMap(44);
             //System.out.println(video.toString());
