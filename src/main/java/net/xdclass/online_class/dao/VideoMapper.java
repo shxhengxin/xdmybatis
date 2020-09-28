@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VideoMapper {
     /***
@@ -42,4 +43,12 @@ public interface VideoMapper {
      * @return
      */
     int addBatch(List<Video> list);
+
+    int updateVideo(Video video);
+
+    int updateVideoSelective(Video video);
+
+    int deleteByCreateTimeAndPrice(Map<String,Object> map);
+
+    Video selectBaseFieldByWithResultMap(@Param("video_id") int videoId);
 }

@@ -16,7 +16,7 @@ public class Video {
 
     private int price;
     private Date createTime;
-    private double point;
+    private Double point;
 
     public String getSummary() {
         return summary;
@@ -50,11 +50,11 @@ public class Video {
         this.createTime = createTime;
     }
 
-    public double getPoint() {
+    public Double getPoint() {
         return point;
     }
 
-    public void setPoint(double point) {
+    public void setPoint(Double point) {
         this.point = point;
     }
 

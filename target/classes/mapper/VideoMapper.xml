@@ -7,13 +7,17 @@ namespace:名称空间，一般需要保持全局唯一  最好和dao层的java�
 可以映射 sql语句 到对应的方法名称和参数、返回类型
 -->
 <mapper namespace="net.xdclass.online_class.dao.VideoMapper">
+    <sql id="base_video_field">
+        id,title,summary,cover_img
+    </sql>
     <!--
     statement sql
     id:当前mapper下需要唯一
     resultType： sql查询结果集的封装
     -->
-    <select id="selectById" resultType="net.xdclass.online_class.domain.Video">
-        select * from video where id = #{video_id}
+    <!--<select id="selectById" resultType="net.xdclass.online_class.domain.Video">-->
+    <select id="selectById" resultType="Video">
+        select <include refid="base_video_field" /> from video where id = #{video_id}
     </select>
     
     <select id="selectByPointAndTitleLike" resultType="net.xdclass.online_class.domain.Video">
@@ -38,9 +42,60 @@ namespace:名称空间，一般需要保持全局唯一  最好和dao层的java�
         </foreach>
     </insert>
 
+    <update id="updateVideo" parameterType="net.xdclass.online_class.domain.Video">
+        UPDATE video
+         set
+          title = #{title,jdbcType=VARCHAR},
+          summary = #{summary,jdbcType=VARCHAR},
+          cover_img = #{coverImg,jdbcType=VARCHAR},
+          price = #{price,jdbcType=INTEGER},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          point = #{point,jdbcType=DOUBLE}
+         WHERE
+         id = #{id}
+    </update>
+
+    <update id="updateVideoSelective" parameterType="net.xdclass.online_class.domain.Video">
+        UPDATE video
+
+         <trim prefix="set" suffixOverrides=",">
+             <if test="title != null">title = #{title,jdbcType=VARCHAR},</if>
+
+             <if test="summary != null">summary = #{summary,jdbcType=VARCHAR},</if>
+
+             <if test="coverImg != null">cover_img = #{coverImg,jdbcType=VARCHAR},</if>
+
+             <if test="price != 0">price = #{price,jdbcType=INTEGER},</if>
+
+             <if test="createTime != null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+
+             <if test="point != null">point = #{point,jdbcType=DOUBLE}</if>
+         </trim>
+        WHERE
+        id = #{id}
+    </update>
 
 
 
+    <delete id="deleteByCreateTimeAndPrice" parameterType="java.util.Map">
+        delete from video where create_time <![CDATA[ > ]]> #{createTime} and price <![CDATA[ <= ]]> #{price};
+    </delete>
+
+    <resultMap id="VideoResultMap" type="Video">
+        <!--
+        ID:指定查询列的唯一标识
+        column 数据库字段的名称
+        property pojo类的名称
+        -->
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="cover_img" property="coverImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectBaseFieldByWithResultMap" resultMap="VideoResultMap">
+        select <include refid="base_video_field" /> from video where id = #{video_id}
+    </select>
 
 
 
